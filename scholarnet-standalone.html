@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarNet - Student Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Crimson Text', serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        #root {
+            width: 100%;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // Simple icon components (replacing lucide-react)
+        const Icon = ({ type, size = 24 }) => {
+            const icons = {
+                home: "🏠",
+                users: "👥",
+                bell: "🔔",
+                search: "🔍",
+                camera: "📷",
+                message: "💬",
+                graduation: "🎓",
+                briefcase: "💼",
+                calendar: "📅",
+                award: "🏆",
+                trending: "📈"
+            };
+            return <span style={{ fontSize: `${size}px` }}>{icons[type] || "•"}</span>;
+        };
+
+        function ScholarNet() {
+            const [currentView, setCurrentView] = useState('feed');
+            const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+            const posts = [
+                {
+                    id: 1,
+                    author: 'Sarah Mitchell',
+                    school: 'Oakwood Academy',
+                    yearGroup: 'Alumni 2019',
+                    role: 'Software Engineer at Google',
+                    avatar: '👩‍💼',
+                    time: '2h ago',
+                    content: 'Just hit my 5-year work anniversary! To all current students at Oakwood - the journey from GCSEs to tech is absolutely possible. Happy to chat with anyone interested in software engineering.',
+                    likes: 47,
+                    comments: 12
+                },
+                {
+                    id: 2,
+                    author: 'James Chen',
+                    school: 'Oakwood Academy',
+                    yearGroup: 'Year 13',
+                    avatar: '👨‍🎓',
+                    time: '5h ago',
+                    content: 'Just received my offer from Durham to study Computer Science! Massive thanks to the alumni who helped me with my personal statement and interview prep.',
+                    likes: 89,
+                    comments: 24
+                }
+            ];
+
+            if (!isLoggedIn) {
+                return (
+                    <div style={{
+                        minHeight: '100vh',
+                        background: 'linear-gradient(135deg, #8B2E2E 0%, #2C5F2D 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '2rem'
+                    }}>
+                        <div style={{
+                            maxWidth: '900px',
+                            width: '100%',
+                            display: 'grid',
+                            gridTemplateColumns: window.innerWidth > 768 ? '1fr 1fr' : '1fr',
+                            gap: '0',
+                            background: '#FAF8F5',
+                            borderRadius: '4px',
+                            overflow: 'hidden',
+                            boxShadow: '0 30px 80px rgba(0,0,0,0.4)'
+                        }}>
+                            <div style={{
+                                padding: '4rem 3rem',
+                                background: '#8B2E2E',
+                                color: '#FAF8F5'
+                            }}>
+                                <div style={{
+                                    fontFamily: '"Playfair Display", serif',
+                                    fontSize: '3rem',
+                                    fontWeight: '700',
+                                    marginBottom: '1rem'
+                                }}>ScholarNet</div>
+                                <div style={{
+                                    fontSize: '1.25rem',
+                                    opacity: 0.9,
+                                    lineHeight: '1.6',
+                                    marginBottom: '2rem'
+                                }}>
+                                    Where UK secondary school communities connect, collaborate, and grow together.
+                                </div>
+                            </div>
+
+                            <div style={{
+                                padding: '4rem 3rem'
+                            }}>
+                                <h2 style={{
+                                    fontFamily: '"Playfair Display", serif',
+                                    fontSize: '2rem',
+                                    fontWeight: '700',
+                                    marginBottom: '0.5rem'
+                                }}>Welcome back</h2>
+                                <p style={{
+                                    fontSize: '1.1rem',
+                                    color: '#666',
+                                    marginBottom: '2rem'
+                                }}>Sign in to your account</p>
+
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                                    <input
+                                        type="email"
+                                        placeholder="your.name@school.ac.uk"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.875rem 1rem',
+                                            border: '2px solid #E5E5E5',
+                                            borderRadius: '2px',
+                                            fontSize: '1rem'
+                                        }}
+                                    />
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        style={{
+                                            width: '100%',
+                                            padding: '0.875rem 1rem',
+                                            border: '2px solid #E5E5E5',
+                                            borderRadius: '2px',
+                                            fontSize: '1rem'
+                                        }}
+                                    />
+                                    <button
+                                        onClick={() => setIsLoggedIn(true)}
+                                        style={{
+                                            padding: '1rem',
+                                            background: '#8B2E2E',
+                                            color: '#FAF8F5',
+                                            border: 'none',
+                                            borderRadius: '2px',
+                                            fontSize: '1.05rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            marginTop: '0.5rem'
+                                        }}
+                                    >Sign in</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div style={{
+                    minHeight: '100vh',
+                    background: '#F5F3EF'
+                }}>
+                    {/* Header */}
+                    <header style={{
+                        background: '#FAF8F5',
+                        borderBottom: '1px solid #E5DED3',
+                        padding: '0 2rem',
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 100
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            height: '70px',
+                            flexWrap: 'wrap'
+                        }}>
+                            <div style={{
+                                fontFamily: '"Playfair Display", serif',
+                                fontSize: '1.75rem',
+                                fontWeight: '700',
+                                color: '#8B2E2E'
+                            }}>ScholarNet</div>
+
+                            <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+                                <div onClick={() => setCurrentView('feed')} style={{
+                                    cursor: 'pointer',
+                                    color: currentView === 'feed' ? '#8B2E2E' : '#666',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon type="home" size={24} />
+                                    <span style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>Home</span>
+                                </div>
+                                <div onClick={() => setCurrentView('network')} style={{
+                                    cursor: 'pointer',
+                                    color: currentView === 'network' ? '#8B2E2E' : '#666',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
+                                }}>
+                                    <Icon type="users" size={24} />
+                                    <span style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>Network</span>
+                                </div>
+                                <div style={{
+                                    cursor: 'pointer',
+                                    color: '#666',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    position: 'relative'
+                                }}>
+                                    <Icon type="bell" size={24} />
+                                    <span style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>Alerts</span>
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-4px',
+                                        right: '-4px',
+                                        width: '18px',
+                                        height: '18px',
+                                        background: '#8B2E2E',
+                                        borderRadius: '50%',
+                                        color: '#FFF',
+                                        fontSize: '0.7rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>3</div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Main Content */}
+                    <div style={{
+                        maxWidth: '900px',
+                        margin: '2rem auto',
+                        padding: '0 2rem'
+                    }}>
+                        {currentView === 'feed' && (
+                            <>
+                                {/* Create Post */}
+                                <div style={{
+                                    background: '#FAF8F5',
+                                    borderRadius: '4px',
+                                    border: '1px solid #E5DED3',
+                                    padding: '1.5rem',
+                                    marginBottom: '1.5rem'
+                                }}>
+                                    <textarea
+                                        placeholder="Share an update, ask for advice, or celebrate a success..."
+                                        style={{
+                                            width: '100%',
+                                            minHeight: '80px',
+                                            padding: '1rem',
+                                            border: '2px solid #E5DED3',
+                                            borderRadius: '4px',
+                                            fontSize: '1rem',
+                                            fontFamily: '"Crimson Text", serif',
+                                            resize: 'vertical'
+                                        }}
+                                    />
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'flex-end',
+                                        marginTop: '1rem'
+                                    }}>
+                                        <button style={{
+                                            padding: '0.75rem 2rem',
+                                            background: '#8B2E2E',
+                                            color: '#FAF8F5',
+                                            border: 'none',
+                                            borderRadius: '25px',
+                                            fontSize: '0.95rem',
+                                            fontWeight: '600',
+                                            cursor: 'pointer'
+                                        }}>Post</button>
+                                    </div>
+                                </div>
+
+                                {/* Posts */}
+                                {posts.map(post => (
+                                    <div key={post.id} style={{
+                                        background: '#FAF8F5',
+                                        borderRadius: '4px',
+                                        border: '1px solid #E5DED3',
+                                        padding: '2rem',
+                                        marginBottom: '1.5rem'
+                                    }}>
+                                        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+                                            <div style={{ fontSize: '2.5rem' }}>{post.avatar}</div>
+                                            <div>
+                                                <h4 style={{
+                                                    fontFamily: '"Playfair Display", serif',
+                                                    fontSize: '1.2rem',
+                                                    fontWeight: '700',
+                                                    marginBottom: '0.25rem'
+                                                }}>{post.author}</h4>
+                                                <p style={{ fontSize: '0.9rem', color: '#666' }}>
+                                                    {post.yearGroup} • {post.school}
+                                                </p>
+                                                {post.role && (
+                                                    <p style={{ fontSize: '0.85rem', color: '#8B2E2E', fontWeight: '600' }}>
+                                                        {post.role}
+                                                    </p>
+                                                )}
+                                                <p style={{ fontSize: '0.85rem', color: '#999', marginTop: '0.5rem' }}>
+                                                    {post.time}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p style={{
+                                            fontSize: '1.05rem',
+                                            lineHeight: '1.7',
+                                            color: '#333',
+                                            marginBottom: '1.5rem'
+                                        }}>{post.content}</p>
+                                        <div style={{
+                                            display: 'flex',
+                                            gap: '2rem',
+                                            paddingTop: '1rem',
+                                            borderTop: '1px solid #E5DED3'
+                                        }}>
+                                            <button style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                color: '#666',
+                                                fontSize: '0.95rem',
+                                                cursor: 'pointer'
+                                            }}>
+                                                <Icon type="trending" size={18} /> {post.likes} Likes
+                                            </button>
+                                            <button style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                color: '#666',
+                                                fontSize: '0.95rem',
+                                                cursor: 'pointer'
+                                            }}>
+                                                <Icon type="message" size={18} /> {post.comments} Comments
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>
+                        )}
+
+                        {currentView === 'network' && (
+                            <div style={{
+                                background: '#FAF8F5',
+                                borderRadius: '4px',
+                                border: '1px solid #E5DED3',
+                                padding: '2rem'
+                            }}>
+                                <h2 style={{
+                                    fontFamily: '"Playfair Display", serif',
+                                    fontSize: '2rem',
+                                    fontWeight: '700',
+                                    marginBottom: '1.5rem'
+                                }}>Your Network</h2>
+                                <p style={{ fontSize: '1.1rem', color: '#666' }}>
+                                    Connect with current students and alumni from your school community.
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<ScholarNet />);
+    </script>
+</body>
+</html>
